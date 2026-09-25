@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* DevWorkstation palette.
+   Dark is the working default; the bench reads as an instrument panel.
+   Amber is reserved for "this is live / this is selected" and nothing else. */
+:root,
+:root[data-theme="dark"] {
+  --ink: #0b0f17;
+  --bg: #10161f;
+  --surface: #171e29;
+  --raised: #1e2733;
+  --line: #2a3441;
+  --text: #dde4ed;
+  --muted: #8a98a9;
+  --accent: #e0913c;
+  --ok: #56b08c;
+  --warn: #d9a441;
+  --err: #dd5b52;
+  --info: #5e9bd1;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --ink: #e4e7ec;
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --raised: #fafbfc;
+  --line: #d9dee5;
+  --text: #1a2029;
+  --muted: #5c6875;
+  --accent: #b96a15;
+  --ok: #2f7f60;
+  --warn: #9a6b0d;
+  --err: #b8342b;
+  --info: #2f6ea8;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;
+}
+
+input, textarea, select, .selectable { user-select: text; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 5px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* One deliberate motion: the live indicator in the status strip. */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+.live-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.field {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--text);
+  padding: 6px 9px;
+  width: 100%;
+  font-size: 13px;
+  font-family: inherit;
+}
+.field:focus { border-color: var(--accent); outline: none; }
+.field::placeholder { color: var(--muted); }
+
+.btn {
+  border-radius: 3px;
+  padding: 6px 13px;
+  font-size: 13px;
+  border: 1px solid var(--line);
+  background: var(--raised);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { border-color: var(--muted); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1a1206;
+  font-weight: 600;
+}
+.btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+.btn-danger { color: var(--err); border-color: color-mix(in srgb, var(--err) 40%, transparent); }
+
+.mono { font-family: "Cascadia Code", "Cascadia Mono", Consolas, ui-monospace, monospace; }
